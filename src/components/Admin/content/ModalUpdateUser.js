@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc";
 import { toast } from 'react-toastify';
 import { postCreateNewUser } from '../../../services/apiServices'
-const ModalCreateUser = (props) => {
-    const { show, setShow } = props;
+import _ from 'lodash'
+const ModalUpdateUser = (props) => {
+    const { show, setShow, dataUpdate } = props;
 
 
     const handleClose = () => {
         setShow(false)
         setEmail("");
         setPassword("");
-        setUsername("")
+        setUsername("");
         setRole("USERS");
         setImg("");
         setPreviewImg("");
@@ -23,6 +24,20 @@ const ModalCreateUser = (props) => {
     const [role, setRole] = useState("USER");
     const [image, setImg] = useState("");
     const [previewImg, setPreviewImg] = useState("")
+
+    useEffect(() => {
+        if (!_.isEmpty(dataUpdate)) {
+            setEmail(dataUpdate.email);
+            setUsername(dataUpdate.username);
+            setRole(dataUpdate.role);
+            setImg("");
+            if (dataUpdate.image) {
+                setPreviewImg(`data:image/jpeg;base64,${dataUpdate.image}`);
+
+            }
+        }
+    }, [props.dataUpdate])
+
     const handleUploadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setPreviewImg(URL.createObjectURL(event.target.files[0]))
@@ -70,17 +85,17 @@ const ModalCreateUser = (props) => {
                 size="xl"
                 className='modal-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>ADD NEW USER </Modal.Title>
+                    <Modal.Title>Update a USER </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
                         <div className="col-md-6">
                             <label className="form-label">Email</label>
-                            <input type="email" className="form-control" value={email} onChange={(event) => setEmail(event.target.value)} />
+                            <input type="email" className="form-control" value={email} disabled onChange={(event) => setEmail(event.target.value)} />
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} />
+                            <input type="password" className="form-control" value={password} disabledz onChange={(event) => setPassword(event.target.value)} />
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Username</label>
@@ -124,4 +139,4 @@ const ModalCreateUser = (props) => {
     );
 }
 
-export default ModalCreateUser;
+export default ModalUpdateUser;
