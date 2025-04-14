@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc";
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices'
+import { putUpdateUser } from '../../../services/apiServices'
 import _ from 'lodash'
 const ModalUpdateUser = (props) => {
     const { show, setShow, dataUpdate } = props;
@@ -60,11 +60,7 @@ const ModalUpdateUser = (props) => {
             toast.error('invalid email')
             return
         }
-        if (!password) {
-            toast.error('invalid password')
-            return
-        }
-        let data = await postCreateNewUser(email, password, username, role, image)
+        let data = await putUpdateUser(dataUpdate.id, username, role, image)
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
@@ -95,7 +91,7 @@ const ModalUpdateUser = (props) => {
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" value={password} disabledz onChange={(event) => setPassword(event.target.value)} />
+                            <input type="password" className="form-control" value={password} disabled onChange={(event) => setPassword(event.target.value)} />
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Username</label>
