@@ -3,12 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc";
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices'
+import { getAllUsers } from '../../../services/apiServices'
+
 
 
 
 const ModalViewUser = (props) => {
-    const { show, setShow } = props;
+    const { show, setShow, listUsers } = props;
 
 
     const handleClose = () => {
@@ -28,7 +29,6 @@ const ModalViewUser = (props) => {
     const [previewImg, setPreviewImg] = useState("")
 
 
-
     const handleUploadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
             setPreviewImg(URL.createObjectURL(event.target.files[0]))
@@ -38,13 +38,8 @@ const ModalViewUser = (props) => {
             setPreviewImg("");
         }
     }
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
+
+
 
 
 
