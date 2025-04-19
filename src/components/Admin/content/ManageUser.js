@@ -20,6 +20,7 @@ const ManageUser = (props) => {
     const [dataDelete, setDataDetele] = useState({});
     const [listUsers, setListUsers] = useState([]);
     const [pageCount, setPageCount] = useState(0)
+    const [currentPage, setCurrenPage] = useState(1)
     useEffect(() => {
         // fetchListUsers()
         fetchListUsersPaginate(1)
@@ -79,12 +80,17 @@ const ManageUser = (props) => {
                         handleClickBtnDelete={handleClickBtnDelete}
                         fetchListUsersPaginate={fetchListUsersPaginate}
                         pageCount={pageCount}
+                        currentPage={currentPage}
+                        setCurrenPage={setCurrenPage}
                     />
                 </div>
                 <ModalCreateUser
                     show={showModalCreateUser}
                     setShow={setShowModalCreateUser}
                     fetchListUsers={fetchListUsers}
+                    fetchListUsersPaginate={fetchListUsersPaginate}
+                    currentPage={currentPage}
+                    setCurrenPage={setCurrenPage}
                 />
                 <ModalUpdateUser
                     show={showModalUpdateUser}
@@ -92,6 +98,10 @@ const ManageUser = (props) => {
                     dataUpdate={dataUpdate}
                     fetchListUsers={fetchListUsers}
                     resetUpdateData={resetUpdateData}
+                    fetchListUsersPaginate={fetchListUsersPaginate}
+                    currentPage={currentPage}
+                    setCurrenPage={setCurrenPage}
+
                 />
                 <ModalViewUser
                     show={showModalViewUser}
@@ -105,6 +115,10 @@ const ManageUser = (props) => {
                     setShow={setShowModalDeleteUser}
                     dataDelete={dataDelete}
                     fetchListUsers={fetchListUsers}
+                    fetchListUsersPaginate={fetchListUsersPaginate}
+                    currentPage={currentPage}
+                    setCurrenPage={setCurrenPage}
+
 
                 />
 

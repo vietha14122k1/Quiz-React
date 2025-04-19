@@ -5,6 +5,7 @@ const TableUserPaginate = (props) => {
     const { listUsers, pageCount } = props;
     const handlePageClick = (event) => {
         props.fetchListUsersPaginate(+event.selected + 1)
+        props.setCurrenPage(+event.selected + 1)
         console.log(`User requested page number ${event.selected}`);
     };
     return (
@@ -44,7 +45,7 @@ const TableUserPaginate = (props) => {
                         </tr>}
                 </tbody>
             </table>
-            <div className="user-pagination">
+            <div className="user-pagination" >
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -64,6 +65,7 @@ const TableUserPaginate = (props) => {
                     containerClassName="pagination"
                     activeClassName="active"
                     renderOnZeroPageCount={null}
+                    foncePage={props.currenPage - 1}
                 />
             </div>
 
