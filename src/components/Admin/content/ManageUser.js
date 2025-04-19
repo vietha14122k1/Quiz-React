@@ -103,13 +103,13 @@ const ManageUser = (props) => {
                     setCurrenPage={setCurrenPage}
 
                 />
-                <ModalViewUser
+                {/* <ModalViewUser
                     show={showModalViewUser}
                     setShow={setShowModalViewUser}
                     fetchListUsers={fetchListUsers}
 
                     listUsers={listUsers}
-                />
+                /> */}
                 <ModallDeleteUser
                     show={showModalDeleteUser}
                     setShow={setShowModalDeleteUser}

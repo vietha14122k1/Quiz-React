@@ -14,7 +14,7 @@ const ModalUpdateUser = (props) => {
         setEmail("");
         setPassword("");
         setUsername("");
-        setRole("USERS");
+        setRole("USER");
         setImg("");
         setPreviewImg("");
     };
@@ -103,7 +103,7 @@ const ModalUpdateUser = (props) => {
                             <label className="form-label">Role</label>
                             <select className="form-select" onChange={(event) => setRole(event.target.value)}>
                                 <option selected value="USER">USER</option>
-                                <option selected value="ADMIN">ADMIN</option>
+                                <option value="ADMIN">ADMIN</option>
                             </select>
                         </div>
                         <div className="col-md-12">

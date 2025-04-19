@@ -9,7 +9,7 @@ import { getAllUsers } from '../../../services/apiServices'
 
 
 const ModalViewUser = (props) => {
-    const { show, setShow, listUsers } = props;
+    const { show, setShow } = props;
 
 
     const handleClose = () => {
@@ -17,7 +17,7 @@ const ModalViewUser = (props) => {
         setEmail("");
         setPassword("");
         setUsername("");
-        setRole("USERS");
+        setRole("USER");
         setImg("");
         setPreviewImg("");
     };
