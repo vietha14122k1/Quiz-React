@@ -28,7 +28,7 @@ const getUserWidthPaginate = (page, limit) => {
     return axios.get(`api/v1/participant?page=${page}&limit=${limit}`);
 }
 const postLogin = (userEmail, userPpassword) => {
-    return axios.post(`http://localhost:8081/api/v1/login`, { email: userEmail, password: userPpassword });
+    return axios.post(`http://localhost:8081/api/v1/login`, { email: userEmail, password: userPpassword, delay: 5000 });
 
 }
 const postRegister = (email, password, username) => {
