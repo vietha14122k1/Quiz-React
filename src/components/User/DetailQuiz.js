@@ -30,6 +30,7 @@ const DetailQuiz = (props) => {
                             questionDescription = item.description;
                             image = item.image;
                         }
+                        item.answers.isSelected = false;
                         answers.push(item.answers);
                     })
                     return { questionId: key, answers, questionDescription, image }
@@ -48,6 +49,25 @@ const DetailQuiz = (props) => {
         if (dataQuiz && dataQuiz.length > index + 1)
             setIndex(index + 1)
     }
+
+    const handleCheckBoxP = (answersId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        let question = dataQuizClone.find(item => +item.questionId === +questionId);
+        if (question && question.answers) {
+            let b = question.answers.map(item => {
+                if (item.id === +answersId) {
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            })
+            question.answers = b;
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
+        if (index > -1) {
+            dataQuizClone[index] = question
+
+        }
+    }
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -59,12 +79,13 @@ const DetailQuiz = (props) => {
 
                 </div>
                 <div className="q-content">
-                    <Question index={index}
+                    <Question index={index} handleCheckBoxP={handleCheckBoxP}
                         data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []} />
                 </div>
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
                     <button className="btn btn-primary" onClick={() => handleNext()}>Next</button>
+                    <button className="btn btn-waring" onClick={() => handleNext()}>Finish</button>
 
                 </div>
 
