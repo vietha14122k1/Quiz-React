@@ -64,10 +64,47 @@ const DetailQuiz = (props) => {
         }
         let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
         if (index > -1) {
-            dataQuizClone[index] = question
+            dataQuizClone[index] = question;
+            setDataQuiz(dataQuizClone);
 
         }
     }
+    const handleFinishQuiz = () => {
+        // {
+        //     "quizId": 1,
+        //     "answers": [
+        //         { 
+        //             "questionId": 1,
+        //             "userAnswerId": [3]
+        //         },
+        //         { 
+        //             "questionId": 2,
+        //             "userAnswerId": [6]
+        //         }
+        //     ]
+        // }
+        let payload = {
+            quizId: +quizId,
+            answers: [],
+        };
+        let answers = [];
+
+        if (dataQuiz && dataQuiz.length > 0) // dam bao la array
+            dataQuiz.forEach(question => {
+                let questionId = question.questionId;
+                let userAnswerId = [];
+                question.answers.forEach(ans => {
+                    if (ans.isSelected === true) {
+                        userAnswerId.push(ans.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId
+                })
+            })
+        payload.answers = answers;
+    };
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -85,7 +122,7 @@ const DetailQuiz = (props) => {
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
                     <button className="btn btn-primary" onClick={() => handleNext()}>Next</button>
-                    <button className="btn btn-waring" onClick={() => handleNext()}>Finish</button>
+                    <button className="btn btn-waring" onClick={() => handleFinishQuiz()}>Finish</button>
 
                 </div>
 
