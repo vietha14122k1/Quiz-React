@@ -15,8 +15,10 @@ import { MdDashboard } from "react-icons/md"
 
 import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } from 'react-icons/fa';
 import sidebarBg from '../../assets/bg2.jpg';
-import { Link } from 'react-router-dom';
-const SidBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
+import { Link, useNavigate } from 'react-router-dom';
+const SidBar = (props) => {
+    const navigate = useNavigate();
+    const { image, collapsed, toggled, handleToggleSidebar } = props
     return (
         <>
             <ProSidebar
@@ -40,7 +42,7 @@ const SidBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                         }}
                     >
                         <DiReact size={'3em'} color={'00bfff'} />
-                        <span>Daxjf</span>
+                        <span onClick={() => navigate('/')}>Daxjf</span>
                     </div>
                 </SidebarHeader>
 
@@ -66,7 +68,10 @@ const SidBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                             <MenuItem> Quản lý uese
                                 <Link to="/admins/manage-user" />
                             </MenuItem>
-                            <MenuItem> Quản lý bài quiz</MenuItem>
+                            <MenuItem> Quản lý bài quiz
+                                <Link to="/admins/manage-quizzes" />
+
+                            </MenuItem>
                             <MenuItem> Quản lý câu hỏi</MenuItem>
                         </SubMenu>
 
