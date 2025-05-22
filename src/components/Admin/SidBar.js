@@ -72,7 +72,10 @@ const SidBar = (props) => {
                                 <Link to="/admins/manage-quizzes" />
 
                             </MenuItem>
-                            <MenuItem> Quản lý câu hỏi</MenuItem>
+                            <MenuItem> Quản lý câu hỏi
+                                <Link to="/admins/manage-questions" />
+
+                            </MenuItem>
                         </SubMenu>
 
                     </Menu>
