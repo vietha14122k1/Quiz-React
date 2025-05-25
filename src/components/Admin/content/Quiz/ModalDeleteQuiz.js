@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import { deleteQuizForAdmin } from '../../../../services/apiService';
+import { deleteQuizForAdmin } from '../../../../services/apiServices';
 
 const ModalDeleteQuiz = (props) => {
     const { show, setShow, dataDelete } = props;

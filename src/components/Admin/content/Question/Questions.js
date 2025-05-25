@@ -2,14 +2,13 @@ import { useState } from 'react';
 import Select from 'react-select';
 import './Questions.scss'
 
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa6";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import { TiMinus } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
 import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash'
-
+import Lightbox from "react-awesome-lightbox";
 
 const Questions = (props) => {
     const options = [
@@ -36,6 +35,12 @@ const Questions = (props) => {
             },
         ]
     );
+
+    const [isPreviewImage, setIsPreviewImage] = useState(false)
+    const [dataImagePreview, setDataImagePreview] = useState({
+        title: '',
+        url: ''
+    })
 
     const handleAddRemoveQuestion = (type, id) => {
         if (type === 'ADD') {
@@ -73,21 +78,21 @@ const Questions = (props) => {
 
 
             };
-            let index = questionsClone.findIndex(item.id === questionId);
+            let index = questionsClone.findIndex(item => item.id === questionId);
             questionsClone[index].answers.push(newAnswer)
             setQuestions(questionsClone)
         }
         if (type === 'REMOVE') {
-            let index = questionsClone.findIndex(item.id === questionId);
+            let index = questionsClone.findIndex(item => item.id === questionId);
             questionsClone[index] = questionsClone[index].answers.filter(item => item.id !== answerId)
             setQuestions(questionsClone)
 
         }
     }
     const handleOnChange = (type, questionId, value) => {
-        if (tyoe === 'QUESTION') {
+        if (type === 'QUESTION') {
             let questionsClone = _.cloneDeep(questions);
-            let index = questionsClone.findIndex(item.id === questionId);
+            let index = questionsClone.findIndex(item => item.id === questionId);
             if (index > -1) {
                 questionsClone[index].desciption = value;
                 setQuestions(questionsClone);
@@ -96,7 +101,7 @@ const Questions = (props) => {
     }
     const handleOnChangeFileQuestion = (questionId, event) => {
         let questionsClone = _.cloneDeep(questions);
-        let index = questionsClone.findIndex(item.id === questionId);
+        let index = questionsClone.findIndex(item => item.id === questionId);
         if (index > -1 && event.target && event.target.files && event.target.files[0]) {
             questionsClone[index].imageFile = event.target.files[0];
             questionsClone[index].imageName = event.target.files[0].name;
@@ -106,7 +111,7 @@ const Questions = (props) => {
     }
     const handleAnswerQuestion = (type, answerId, questionId, value) => {
         let questionsClone = _.cloneDeep(questions);
-        let index = questionsClone.findIndex(item.id === questionId);
+        let index = questionsClone.findIndex(item => item.id === questionId);
         if (index > -1) {
             questionsClone[index].answers = questionsClone[index].answers.map(answer => {
                 if (answer.id === answerId) {
@@ -125,6 +130,20 @@ const Questions = (props) => {
 
         }
 
+    }
+    const handleSubmitQuestionForQuiz = () => {
+
+    }
+    const handlePreviewImage = (questionId) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1) {
+            setDataImagePreview({
+                url: URL.createObjectURL(questionsClone[index].imageFile),
+                title: questionsClone[index].imageName
+            })
+            setIsPreviewImage(true)
+        }
     }
     return (
         <div className="question-container">
@@ -163,7 +182,7 @@ const Questions = (props) => {
                                         <input id={`${question.id}`} type={'file'} hidden
                                             onChange={(event) => handleOnChangeFileQuestion(question.id, event)}
                                         />
-                                        <span>{question.imageName ? question.imageName : '0 file is uploaded'}</span>
+                                        <span>{question.imageName ? <span onClick={() => handlePreviewImage(question.id)}> {question.imageName} </span> : '0 file is uploaded'}</span>
                                     </div>
                                     <div className='btn-add '>
                                         <span onClick={() => handleAddRemoveQuestion('ADD', '')}><FaPlus className='icon-add' /></span>
@@ -173,7 +192,7 @@ const Questions = (props) => {
                                     </div>
 
                                 </div>
-                                {question.answers && question.answers / length > 0
+                                {question.answers && question.answers.length > 0
                                     && question.answers.map((answer, index) => {
                                         return (
                                             <div key={answer.id} className='answers-content'>
@@ -197,16 +216,24 @@ const Questions = (props) => {
                                         )
                                     })
                                 }
+
                             </div>
                         )
                     })
                 }
-                {question.answers && question.answers / length > 0 &&
+                {questions && questions.length > 0 &&
                     <div>
-                        <button className='btn btn-warning'>Save Question</button>
+                        <button onClick={() => handleSubmitQuestionForQuiz()} className='btn btn-warning'>Save Question</button>
                     </div>
                 }
+                {isPreviewImage === true &&
+                    <Lightbox image={dataImagePreview.url}
+                        title={dataImagePreview.title}
+                        onClose={() => setIsPreviewImage(false)}
+                    ></Lightbox>
+                }
             </div>
+
         </div>
     )
 }

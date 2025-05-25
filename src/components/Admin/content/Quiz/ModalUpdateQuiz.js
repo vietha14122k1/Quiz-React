@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { putUpdateQuizForAdmin } from '../../../../services/apiService';
+import { putUpdateQuizForAdmin } from '../../../../services/apiServices';
 import _ from 'lodash';
 
 const ModalUpdateQuiz = (props) => {

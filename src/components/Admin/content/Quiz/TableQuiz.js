@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllQuizForAdmin } from "../../../../services/apiService";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
 import ModalUpdateQuiz from "./ModalUpdateQuiz";
+import { getAllQuizForAdmin } from "../../../../services/apiServices";
 const TableQuiz = (props) => {
 
     const [listQuiz, setListQuiz] = useState([]);
