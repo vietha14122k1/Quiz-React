@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './QuizQA.scss'
-import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion, getQuizWitthQA } from "../../../../services/apiServices";
+import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion, getQuizWitthQA, postUpsertQA } from "../../../../services/apiServices";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { TiMinus } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
@@ -219,16 +219,25 @@ const QuizQA = (props) => {
             toast.error(`Not empty description for question ${indexQ1 + 1}`);
             return
         }
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(+selectedQuiz.value, question.description, question.imageFile)
-            //sudmit answer
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(answer.description, answer.isCorrect, q.DT.id)
+        let questionClone = _.cloneDeep(questions);
+        for (let i = 0; i < questionClone.length; i++) {
+            if (questionClone[i].imageFile) {
+                questionClone[i].imageFile = await toBase64(questionClone[i].imageFile)
             }
         }
-        toast.success('Create question and answer sucessed!');
-        setQuestions(initQuestions);
+        let res = await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: questionClone
+        })
+        // toast.success('Create question and answer sucessed!');
+        // setQuestions(initQuestions);
     }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
         let index = questionsClone.findIndex(item => item.id === questionId);
