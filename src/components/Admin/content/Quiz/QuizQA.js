@@ -229,8 +229,12 @@ const QuizQA = (props) => {
             quizId: selectedQuiz.value,
             questions: questionClone
         })
-        // toast.success('Create question and answer sucessed!');
-        // setQuestions(initQuestions);
+        if (res && res.EC === 0) {
+            toast.success('Create question and answer sucessed!');
+            fetchQuizWithQA();
+
+        }
+
     }
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
