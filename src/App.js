@@ -5,6 +5,7 @@ import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
 import { Outlet, Link } from "react-router-dom";
 import React from 'react';
 import Header from './components/Header/Header';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const App = () => {
   return (
@@ -17,7 +18,9 @@ const App = () => {
 
         </div>
         <div className='app-content'>
-          <Outlet />
+          <PerfectScrollbar>
+            <Outlet />
+          </PerfectScrollbar>
         </div>
       </div>
     </div>

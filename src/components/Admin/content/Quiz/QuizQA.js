@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './QuizQA.scss'
-import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../../services/apiServices";
+import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion, getQuizWitthQA } from "../../../../services/apiServices";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { TiMinus } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
@@ -42,7 +42,35 @@ const QuizQA = (props) => {
     useEffect(() => {
         fetchQuiz();
     }, [])
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
 
+    }, [selectedQuiz])
+    // return a promise that resolves with a File instance
+    function urltoFile(url, filename, mimeType) {
+        return fetch(url)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], filename, { type: mimeType }));
+    }
+
+    const fetchQuizWithQA = async () => {
+        let res = await getQuizWitthQA(selectedQuiz.value);
+        if (res.EC === 0) {
+            let newQA = [];
+            for (let i = 0; i < res.DT.qa.length; i++) {
+                let q = res.DT.qa[i]
+                if (q.imageFile) {
+                    q.imageName = `Question-${q.id}.png `;
+                    q.imageFile = await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question-${q.id}.png `, 'image/png')
+                }
+                newQA.push(q);
+            }
+            setQuestions(res.DT.qa);
+        }
+
+    }
     const fetchQuiz = async () => {
         let res = await getAllQuizForAdmin();
         if (res && res.EC === 0) {
