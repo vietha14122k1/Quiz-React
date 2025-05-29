@@ -57,5 +57,36 @@
 
     }
 
+    .main-timer {
+        border-bottom: 1px dashed;
+        padding-bottom: 20 px;
+        text-align: center;
+        padding-top: 10px;
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    .main-question {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding-top: 15px;
+
+        .question {
+            border: 1px solid rgb(53, 47, 47);
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &:hover {
+                color: red;
+            }
+        }
+    }
+
 
 }

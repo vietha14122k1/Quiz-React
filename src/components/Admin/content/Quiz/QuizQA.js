@@ -44,7 +44,7 @@ const QuizQA = (props) => {
     }, [])
     useEffect(() => {
         if (selectedQuiz && selectedQuiz.value) {
-            fetchQuizWithQA();
+            fetchQuizWithQA()
         }
 
     }, [selectedQuiz])
