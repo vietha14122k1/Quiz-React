@@ -18,6 +18,7 @@ import DetailQuiz from './components/User/DetailQuiz';
 import ManageQuiz from './components/Admin/content/Quiz/ManageQuiz';
 import Questions from './components/Admin/content/Question/Questions';
 import PrivateRoutes from './routes/PrivateRoutes';
+import React, { Suspense } from 'react';
 const NotFound = () => {
     return (
         <div className='container mt-3 alert alert-danger'>
@@ -27,7 +28,7 @@ const NotFound = () => {
 }
 const Layout = (props) => {
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <Routes>
                 <Route path="/" element={<App />} >
                     <Route index element={<HomePage />} />
@@ -72,7 +73,7 @@ const Layout = (props) => {
                 theme="light"
 
             />
-        </>
+        </Suspense>
     )
 }
 
