@@ -1,13 +1,13 @@
 
-import { INCREMENT, DECREMENT } from '../action/counterAction';
-import { FETCH_USER_LOGIN_SUCCESS } from '../action/userAction';
+import { FETCH_USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS } from '../action/userAction';
 const INITIAL_STATE = {
     account: {
         access_token: '',
         refresh_token: '',
         username: '',
         image: '',
-        role: ''
+        role: '',
+        email: ''
     },
     isAuthenticated: false
 };
@@ -20,14 +20,24 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     refresh_token: action?.patload?.DT?.refresh_token,
                     username: action?.patload?.DT?.username,
                     image: action?.patload?.DT?.image,
-                    role: action?.patload?.DT?.role
+                    role: action?.patload?.DT?.role,
+                    email: action?.patload?.DT?.email
+
                 },
                 isAuthenticated: true
             };
 
-        case DECREMENT:
+        case USER_LOGOUT_SUCCESS:
             return {
-                ...state, count: state.count - 1,
+                ...state, account: {
+                    access_token: '',
+                    refresh_token: '',
+                    username: '',
+                    image: '',
+                    role: '',
+                    email: ''
+                },
+                isAuthenticated: false
             };
         default: return state;
     }
